@@ -70,8 +70,19 @@ a:hover {
     text-decoration: underline;
     transform: scale(1.05);
 }
-
-/* Navbar styles */
+p {
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+    color: #444;
+    text-align: justify;
+    letter-spacing: 0.5px;
+    padding: 0.5rem;
+    background-color: #f4f4f4;
+    border-left: 4px solid #6a11cb;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 nav {
     display: flex;
     justify-content: space-between;

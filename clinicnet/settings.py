@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'clinic',
 ]
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/' #already exists
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

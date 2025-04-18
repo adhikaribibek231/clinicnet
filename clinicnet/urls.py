@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.urls import path
 from clinic.views import *
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('about/', About, name='about'),
     path('', Home, name='home'),
-    
+    path('admin-dashboard/', AdminDashboard, name='admin_dashboard'),
+    path('login/', Login, name='login'),
+    path('register/', Register, name='register'),
+    path('superadmin-dashboard/', SuperAdminDashboard, name='superadmin_dashboard'),
 ]

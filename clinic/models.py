@@ -1,9 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Patient(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
     gender = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female')])
     date_of_birth = models.DateField()
     mobile_number = models.CharField(max_length=15, unique=True, null=True)
@@ -11,27 +11,16 @@ class Patient(models.Model):
     email = models.EmailField(unique=True)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.name}"
 
 class Doctor(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
     specialty = models.CharField(max_length=100)
     mobile_number = models.CharField(max_length=15, unique=True)
     email = models.EmailField(unique=True)
 
     def __str__(self):
-        return f"Dr. {self.first_name} {self.last_name} - {self.specialty}"
-    
-# class Staff(models.Model):
-#     first_name = models.CharField(max_length=50)
-#     last_name = models.CharField(max_length=50)
-#     role = models.CharField(max_length=50, choices=[('admin', 'Admin'), ('receptionist', 'Receptionist')])
-#     mobile_number = models.CharField(max_length=15, unique=True)
-#     email = models.EmailField(unique=True)
-
-#     def __str__(self):
-#             return f"{self.first_name} {self.last_name} - {self.role.capitalize()}"
+        return f"Dr. {self.name} - {self.specialty}"
         
 class Appointment(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
@@ -41,3 +30,21 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f"Appointment: {self.patient} with {self.doctor} on {self.appointment_date}"
+    
+class Prescription(models.Model):
+    appointment = models.OneToOneField(Appointment, on_delete=models.CASCADE)
+    medication = models.TextField()
+    instructions = models.TextField()
+    prescribed_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Prescription for {self.appointment.patient}"
+
+class StaffProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.CharField(max_length=20, choices=[('admin', 'Admin'), ('receptionist', 'Receptionist')])
+    phone = models.CharField(max_length=15, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.role.capitalize()} - {self.user.get_full_name()}"
